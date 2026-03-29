@@ -83,20 +83,34 @@
       height: 90px;
       margin: -45px;
       border-radius: 50%;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      font-size: 12px;
+
       background: var(--panel);
       border: 1px solid var(--border);
       backdrop-filter: blur(8px);
-      transition: all 0.25s ease;
+
+      font-size: 12px;
       font-family: 'JetBrains Mono';
+
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .circle:hover {
+    /* inner content animation instead of parent */
+    .circle span {
+      display: inline-block;
+      transition: transform 0.25s ease;
+    }
+
+    /* hover effect */
+    .circle:hover span {
       transform: scale(1.15);
+    }
+
+    /* glow stays on parent */
+    .circle:hover {
       border-color: var(--accent);
       box-shadow: 0 0 20px rgba(0,229,255,0.4);
     }
@@ -233,11 +247,11 @@
   <div class="line l4"></div>
   <div class="line l5"></div>
 
-  <div class="circle c1">AI</div>
-  <div class="circle c2">CLOUD</div>
-  <div class="circle c3">PROJECTS</div>
-  <div class="circle c4">RESUME</div>
-  <div class="circle c5">LEARNINGS</div>
+  <div class="circle c1"><span>AI</span></div>
+  <div class="circle c2"><span>CLOUD</span></div>
+  <div class="circle c3"><span>PROJECTS</span></div>
+  <div class="circle c4"><span>RESUME</span></div>
+  <div class="circle c5"><span>LEARNINGS</span></div>
 
 </div>
 <div id="modal" class="modal">
