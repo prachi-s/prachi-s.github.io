@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prachi Sengar | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --panel: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #111827, #020617);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+
+    h1 {
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+    }
+
+    .orbit {
+      position: relative;
+      width: 360px;
+      height: 360px;
+      margin: 60px auto;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.2), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono';
+      font-size: 14px;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 30px rgba(0,229,255,0.2);
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 90px;
+      height: 90px;
+      margin: -45px;
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--panel);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+
+      font-size: 12px;
+      font-family: 'JetBrains Mono';
+
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* inner content animation instead of parent */
+    .circle span {
+      display: inline-block;
+      transition: transform 0.25s ease;
+    }
+
+    /* hover effect */
+    .circle:hover span {
+      transform: scale(1.15);
+    }
+
+    /* glow stays on parent */
+    .circle:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0,229,255,0.4);
+    }
+
+    /* circular placement */
+    .c1 { transform: rotate(0deg) translate(150px) rotate(0deg); }
+    .c2 { transform: rotate(72deg) translate(150px) rotate(-72deg); }
+    .c3 { transform: rotate(144deg) translate(150px) rotate(-144deg); }
+    .c4 { transform: rotate(216deg) translate(150px) rotate(-216deg); }
+    .c5 { transform: rotate(288deg) translate(150px) rotate(-288deg); }
+
+    .line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150px;
+      height: 1px;
+      background: linear-gradient(to right, rgba(0,229,255,0.5), transparent);
+      transform-origin: left;
+    }
+
+    .l1 { transform: rotate(0deg); }
+    .l2 { transform: rotate(72deg); }
+    .l3 { transform: rotate(144deg); }
+    .l4 { transform: rotate(216deg); }
+    .l5 { transform: rotate(288deg); }
+
+    .about {
+      max-width: 700px;
+      margin: 60px auto;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono';
+      line-height: 1.7;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .links svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 12px;
+      font-size: 16px;
+      text-decoration: none;
+      color: var(--text);
+      transition: 0.2s;
+    }
+
+    .links a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    .footer {
+      text-align: center;
+      margin: 40px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono';
+    }    
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      width: 420px;
+      max-width: 90%;
+      background: rgba(10,15,25,0.95);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: 'JetBrains Mono';
+      box-shadow: 0 0 30px rgba(0,229,255,0.2);
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close {
+      cursor: pointer;
+      color: var(--muted);
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: var(--accent);
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <h1>PRACHI SENGAR</h1>
+  <div class="tagline">• building secure systems • ai • cloud • automation •</div>
+</header>
+
+<div class="orbit">
+
+  <div class="center">CORE</div>
+
+  <div class="line l1"></div>
+  <div class="line l2"></div>
+  <div class="line l3"></div>
+  <div class="line l4"></div>
+  <div class="line l5"></div>
+
+  <div class="circle c1"><span>AI</span></div>
+  <div class="circle c2"><span>CLOUD</span></div>
+  <div class="circle c3"><span>PROJECTS</span></div>
+  <div class="circle c4"><span>RESUME</span></div>
+  <div class="circle c5"><span>LEARNINGS</span></div>
+
+</div>
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal()">✕</div>
+    <div id="content"></div>
+  </div>
+</div>
+
+<div class="about">
+  I build cloud-native backend systems and platforms, 
+  focusing on automation, infrastructure, scalability and reliable applications.
+</div>
+
+<div class="links">
+  <a href="https://github.com/prachi-s" target="_blank">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.38.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.64.24 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.6-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
+    </svg>
+    GitHub
+  </a>
+
+  <a href="https://www.linkedin.com/in/prachi-sengar-038325211/" target="_blank">
+    <svg viewBox="0 0 24 24">
+      <path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.12 20.45H3.56V9h3.56v11.45zM5.34 7.43c-1.14 0-2.06-.93-2.06-2.07 0-1.14.92-2.07 2.06-2.07 1.14 0 2.06.93 2.06 2.07 0 1.14-.92 2.07-2.06 2.07zM20.45 20.45h-3.56v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.97v5.69H9.3V9h3.42v1.56h.05c.48-.9 1.66-1.87 3.42-1.87 3.65 0 4.32 2.4 4.32 5.52v6.24z"/>
+    </svg>
+    LinkedIn
+  </a>
+</div>
+
+<div class="footer">system.out.println("made by prachi");</div>
+
+<script>
+// DATA
+const data = {
+  AI: `
+    <p>> loading AI systems...</p>
+    <p>> models initialized</p>
+
+    <h3>[ WORK ]</h3>
+    <p>
+    • Developed AI-driven Cloud Optimizer to analyze Kubernetes workloads and recommend cost/performance improvements<br>
+    • Built NLP-based systems and worked on data-driven personalization models<br>
+    • Applied clustering (K-Means) and behavioral profiling for recommendation systems
+    </p>
+
+    <h3>[ TECH ]</h3>
+    <p>
+    Python • TensorFlow • NLP • Scikit-learn • Vertex AI • Data Pipelines
+    </p>
+
+    <h3>[ IMPACT ]</h3>
+    <p>
+    Bridging AI with production systems — moving beyond models to deployable, scalable intelligence.
+    </p>
+  `,
+
+  CLOUD: `
+    <p>> initializing cloud infrastructure...</p>
+    <p>> systems online</p>
+
+    <h3>[ WORK ]</h3>
+    <p>
+    • Built hybrid cloud platform on GKE enabling 200+ teams to provision infra seamlessly<br>
+    • Designed reusable Terraform modules (VPC, IAM, GKE, Cloud SQL) reducing setup time by 90%<br>
+    • Implemented policy-as-code (Sentinel) to enforce compliance and prevent misconfigurations<br>
+    • Enabled Assured Workloads for regulated environments with strict data residency controls
+    </p>
+
+    <h3>[ TECH ]</h3>
+    <p>
+    GCP • AWS • Kubernetes (GKE/EKS) • Terraform • Cloud Run • Docker • CI/CD
+    </p>
+
+    <h3>[ IMPACT ]</h3>
+    <p>
+    Delivered audit-ready, secure infrastructure at scale.
+    </p>
+  `,
+
+  PROJECTS: `
+    <p>> fetching projects...</p>
+    <p>> 2 high-impact systems loaded</p>
+
+    <h3>[ AI CLOUD OPTIMIZER ]</h3>
+    <p>
+    AI-powered platform to monitor Kubernetes workloads and recommend cost & performance optimizations.
+    Built using Python + deployed on AWS EKS with Terraform-based infrastructure.
+    </p>
+
+    <h3>[ DATABASE AUDITOR API ]</h3>
+    <p>
+    Production-grade FastAPI service deployed on Cloud Run with Cloud SQL backend.
+    Enabled secure CRUD operations and session management for auditors with RBAC controls.
+    </p>
+
+    <h3>[ ENV PROVISIONING SYSTEM ]</h3>
+    <p>
+    Automated provisioning of dev/uat environments across GitHub, Terraform Enterprise, and GCP.
+    Fully containerized with CI/CD pipelines triggering infra deployments.
+    </p>
+
+    <h3>[ IMPACT ]</h3>
+    <p>
+    Reduced manual effort, improved developer productivity, and enabled scalable internal platforms.
+    </p>
+  `,
+
+  RESUME: `
+    <p>> accessing profile...</p>
+
+    <h3>[ SUMMARY ]</h3>
+    <p>
+    Software Engineer II at Deutsche Bank with experience in building large-scale cloud platforms,
+    backend systems, and automation frameworks for enterprise environments.
+    </p>
+
+    <h3>[ HIGHLIGHTS ]</h3>
+    <p>
+    • 2+ years experience in cloud + backend engineering<br>
+    • Built infrastructure used by 200+ teams<br>
+    • Reduced provisioning time by 90% through automation<br>
+    • Experience in secure and compliant systems
+    </p>
+
+    <h3>[ DOWNLOAD ]</h3>
+    <a href="resume.pdf" target="_blank">⬇ Download Resume</a>
+  `,
+
+  LEARNINGS: `
+    <p>> tracking growth...</p>
+
+    <h3>[ CERTIFICATIONS ]</h3>
+    <p>
+    • Google Associate Cloud Engineer<br>
+    • Google Generative AI Leader
+    </p>
+
+    <h3>[ NEXT ]</h3>
+    <p>
+    • Deep dive into AWS architecture<br>
+    • Building AI-native developer tools<br>
+    • Exploring platform engineering at scale
+    </p>
+  `
+};
+
+const modal = document.getElementById("modal");
+const content = document.getElementById("content");
+
+document.querySelectorAll(".circle").forEach(c => {
+  c.addEventListener("click", () => {
+    const key = c.querySelector('span').innerText.trim();
+    content.innerHTML = data[key];
+    modal.classList.add("active");
+  });
+});
+
+function closeModal() {
+  modal.classList.remove("active");
+}
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+
+</script>
+</body>
+</html>

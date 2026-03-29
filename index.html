@@ -4,132 +4,180 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prachi Sengar | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f17;
-      --panel: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.08);
-      --text: #e6edf3;
-      --muted: #8b949e;
+      --bg: #020917;
+      --panel: rgba(0,229,255,0.04);
+      --border: rgba(0,229,255,0.12);
+      --text: #cdd9e5;
+      --muted: #4a6275;
       --accent: #00e5ff;
       --accent2: #7c3aed;
+      --green: #00ff88;
+      --warn: #ffb800;
+      --red: #ff4560;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 20% 20%, #111827, #020617);
+      font-family: 'Share Tech Mono', monospace;
+      background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
+    /* ── GRID BG ── */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* scan line */
+    .grid-bg::after {
+      content: '';
+      position: fixed;
+      left: 0; right: 0;
+      height: 2px;
+      background: rgba(0,229,255,0.07);
+      animation: scan 8s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes scan {
+      0%   { top: -2px; }
+      100% { top: 100vh; }
+    }
+
+    /* ── HEADER ── */
     header {
+      position: relative;
       text-align: center;
       padding: 40px 20px 10px;
+      z-index: 2;
     }
 
     h1 {
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      letter-spacing: 6px;
+      margin: 0;
+      background: linear-gradient(90deg, var(--accent), #fff 50%, var(--accent));
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
     }
 
     .tagline {
       color: var(--muted);
-      font-size: 14px;
-      margin-top: 8px;
-      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      margin-top: 10px;
+      letter-spacing: 3px;
     }
 
-    .grid-bg {
+    /* ── FLOATING TECH NODES ── */
+    #tech-canvas {
       position: fixed;
       inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: -1;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── ORBIT ── */
+    .orbit-wrap {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      margin: 50px auto 20px;
     }
 
     .orbit {
       position: relative;
-      width: 360px;
-      height: 360px;
-      margin: 60px auto;
+      width: 380px;
+      height: 380px;
     }
+
+    /* rotating ring */
+    .orbit-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 320px; height: 320px;
+      margin: -160px;
+      border-radius: 50%;
+      border: 1px dashed rgba(0,229,255,0.15);
+      animation: spin-ring 40s linear infinite;
+    }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
 
     .center {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
+      width: 110px; height: 110px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,255,0.2), transparent);
+      background: radial-gradient(circle, rgba(0,229,255,0.15), transparent 70%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'JetBrains Mono';
-      font-size: 14px;
-      border: 1px solid var(--border);
-      box-shadow: 0 0 30px rgba(0,229,255,0.2);
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      border: 1px solid rgba(0,229,255,0.3);
+      box-shadow: 0 0 40px rgba(0,229,255,0.15), inset 0 0 20px rgba(0,229,255,0.05);
+      z-index: 3;
     }
-
-    .circle {
+    .center::before {
+      content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 90px;
-      height: 90px;
-      margin: -45px;
+      inset: -6px;
       border-radius: 50%;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: var(--panel);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(8px);
-
-      font-size: 12px;
-      font-family: 'JetBrains Mono';
-
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      border: 1px solid rgba(0,229,255,0.08);
     }
 
-    /* inner content animation instead of parent */
-    .circle span {
-      display: inline-block;
-      transition: transform 0.25s ease;
-    }
-
-    /* hover effect */
-    .circle:hover span {
-      transform: scale(1.15);
-    }
-
-    /* glow stays on parent */
-    .circle:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(0,229,255,0.4);
-    }
-
-    /* circular placement */
-    .c1 { transform: rotate(0deg) translate(150px) rotate(0deg); }
-    .c2 { transform: rotate(72deg) translate(150px) rotate(-72deg); }
-    .c3 { transform: rotate(144deg) translate(150px) rotate(-144deg); }
-    .c4 { transform: rotate(216deg) translate(150px) rotate(-216deg); }
-    .c5 { transform: rotate(288deg) translate(150px) rotate(-288deg); }
-
+    /* connection lines */
     .line {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 150px;
-      height: 1px;
-      background: linear-gradient(to right, rgba(0,229,255,0.5), transparent);
+      top: 50%; left: 50%;
+      width: 150px; height: 1px;
       transform-origin: left;
+      overflow: visible;
+    }
+    .line::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, rgba(0,229,255,0.4), transparent);
+    }
+    .line::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -1px; left: 0;
+      width: 6px; height: 3px;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+      border-radius: 2px;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; left: 0; }
+      50%       { opacity: 0.4; left: 100%; }
     }
 
     .l1 { transform: rotate(0deg); }
@@ -138,146 +186,295 @@
     .l4 { transform: rotate(216deg); }
     .l5 { transform: rotate(288deg); }
 
+    /* stagger pulse animations */
+    .l2::after { animation-delay: 0.4s; }
+    .l3::after { animation-delay: 0.8s; }
+    .l4::after { animation-delay: 1.2s; }
+    .l5::after { animation-delay: 1.6s; }
+
+    /* ── CIRCLES (skill nodes) ── */
+    .circle {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 90px; height: 90px;
+      margin: -45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 9, 23, 0.85);
+      border: 1px solid rgba(0,229,255,0.2);
+      backdrop-filter: blur(10px);
+      font-size: 10px;
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 1px;
+      cursor: pointer;
+      z-index: 4;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .circle span {
+      display: inline-block;
+      transition: transform 0.2s;
+      text-align: center;
+    }
+
+    /* Hover: full dramatic glitch/glow effect */
+    .circle:hover {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 0 1px rgba(0,229,255,0.3),
+        0 0 20px rgba(0,229,255,0.6),
+        0 0 60px rgba(0,229,255,0.2),
+        inset 0 0 20px rgba(0,229,255,0.1);
+      background: rgba(0,229,255,0.06);
+      animation: glitch-border 0.15s steps(1) infinite;
+    }
+
+    @keyframes glitch-border {
+      0%   { clip-path: inset(0 0 0 0); }
+      20%  { clip-path: inset(2px 0 0 0); }
+      40%  { clip-path: inset(0 2px 0 0); }
+      60%  { clip-path: inset(0 0 2px 0); }
+      80%  { clip-path: inset(0 0 0 2px); }
+      100% { clip-path: inset(0 0 0 0); }
+    }
+
+    .circle:hover span {
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent), 0 0 20px var(--accent);
+      animation: glitch-text 0.1s steps(1) infinite;
+    }
+
+    @keyframes glitch-text {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-1px, 1px); }
+      50%  { transform: translate(1px, -1px); }
+      75%  { transform: translate(-1px, -1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* corner scan effect on hover */
+    .circle::before, .circle::after {
+      content: '';
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .circle::before {
+      top: 4px; left: 4px;
+      width: 12px; height: 12px;
+      border-top: 1px solid var(--accent);
+      border-left: 1px solid var(--accent);
+      border-radius: 2px 0 0 0;
+    }
+    .circle::after {
+      bottom: 4px; right: 4px;
+      width: 12px; height: 12px;
+      border-bottom: 1px solid var(--accent);
+      border-right: 1px solid var(--accent);
+      border-radius: 0 0 2px 0;
+    }
+    .circle:hover::before, .circle:hover::after {
+      opacity: 1;
+    }
+
+    .c1 { transform: rotate(0deg)   translate(150px) rotate(0deg); }
+    .c2 { transform: rotate(72deg)  translate(150px) rotate(-72deg); }
+    .c3 { transform: rotate(144deg) translate(150px) rotate(-144deg); }
+    .c4 { transform: rotate(216deg) translate(150px) rotate(-216deg); }
+    .c5 { transform: rotate(288deg) translate(150px) rotate(-288deg); }
+
+    /* ── ABOUT ── */
     .about {
       max-width: 700px;
-      margin: 60px auto;
+      margin: 30px auto;
       text-align: center;
-      font-size: 14px;
+      font-size: 12px;
       color: var(--muted);
-      font-family: 'JetBrains Mono';
-      line-height: 1.7;
+      line-height: 1.9;
+      position: relative;
+      z-index: 2;
     }
 
+    /* ── LINKS ── */
     .links {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 16px;
+      position: relative;
+      z-index: 2;
     }
-
-    .links svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
-
     .links a {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       margin: 0 12px;
-      font-size: 16px;
+      font-size: 13px;
       text-decoration: none;
-      color: var(--text);
+      color: var(--muted);
+      letter-spacing: 1px;
       transition: 0.2s;
     }
-
-    .links a:hover {
-      color: var(--accent);
-      text-shadow: 0 0 10px var(--accent);
-    }
+    .links a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+    .links svg { width: 16px; height: 16px; fill: currentColor; }
 
     .footer {
       text-align: center;
-      margin: 40px;
-      font-size: 12px;
-      color: var(--muted);
-      font-family: 'JetBrains Mono';
-    }    
+      margin: 36px;
+      font-size: 11px;
+      color: rgba(74,98,117,0.6);
+      position: relative;
+      z-index: 2;
+    }
 
-    /* MODAL */
+    /* ── MODAL / TERMINAL ── */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.7);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+    .modal.active { display: flex; }
+
+    .terminal {
+      width: min(820px, 92vw);
+      background: #080e1a;
+      border: 1px solid rgba(0,229,255,0.25);
+      border-radius: 6px;
+      box-shadow:
+        0 0 0 1px rgba(0,229,255,0.08),
+        0 0 60px rgba(0,229,255,0.15),
+        0 30px 80px rgba(0,0,0,0.6);
+      animation: termOpen 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
     }
 
-    .modal.active {
+    @keyframes termOpen {
+      from { transform: scaleX(0.3) scaleY(0.95); opacity: 0; }
+      to   { transform: scaleX(1)   scaleY(1);    opacity: 1; }
+    }
+
+    /* title bar */
+    .term-bar {
       display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(0,229,255,0.04);
+      border-bottom: 1px solid rgba(0,229,255,0.1);
     }
-
-    .modal-content {
-      width: 420px;
-      max-width: 90%;
-      background: rgba(10,15,25,0.95);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      font-family: 'JetBrains Mono';
-      box-shadow: 0 0 30px rgba(0,229,255,0.2);
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .close {
+    .term-dots { display: flex; gap: 6px; }
+    .term-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
       cursor: pointer;
+    }
+    .dot-red   { background: #ff5f57; }
+    .dot-yellow{ background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .term-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
       color: var(--muted);
-      float: right;
-      margin-bottom: 10px;
+      letter-spacing: 2px;
     }
 
-    h3 {
-      color: var(--accent);
-      margin-top: 10px;
+    /* body */
+    .term-body {
+      padding: 20px 24px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      line-height: 1.75;
+      max-height: 70vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,229,255,0.2) transparent;
     }
+
+    /* colored terminal lines */
+    .t-dim    { color: #3a5068; }
+    .t-cmd    { color: var(--green); }
+    .t-head   { color: var(--accent); font-family: 'Orbitron', monospace; font-size: 11px; letter-spacing: 2px; margin: 14px 0 6px; display: block; }
+    .t-item   { color: #aac8e0; }
+    .t-tech   { color: var(--warn); }
+    .t-impact { color: #b57aff; }
+    .t-link   { color: var(--accent); text-decoration: none; }
+    .t-link:hover { text-decoration: underline; }
+
+    .term-body p { margin: 4px 0; }
+
+    /* blinking cursor at end */
+    .cursor::after {
+      content: '█';
+      color: var(--accent);
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
 <body>
 
 <div class="grid-bg"></div>
+<canvas id="tech-canvas"></canvas>
 
 <header>
   <h1>PRACHI SENGAR</h1>
   <div class="tagline">• building secure systems • ai • cloud • automation •</div>
 </header>
 
-<div class="orbit">
+<div class="orbit-wrap">
+  <div class="orbit">
+    <div class="orbit-ring"></div>
+    <div class="center">CORE</div>
 
-  <div class="center">CORE</div>
+    <div class="line l1"></div>
+    <div class="line l2"></div>
+    <div class="line l3"></div>
+    <div class="line l4"></div>
+    <div class="line l5"></div>
 
-  <div class="line l1"></div>
-  <div class="line l2"></div>
-  <div class="line l3"></div>
-  <div class="line l4"></div>
-  <div class="line l5"></div>
-
-  <div class="circle c1"><span>AI</span></div>
-  <div class="circle c2"><span>CLOUD</span></div>
-  <div class="circle c3"><span>PROJECTS</span></div>
-  <div class="circle c4"><span>RESUME</span></div>
-  <div class="circle c5"><span>LEARNINGS</span></div>
-
+    <div class="circle c1" data-key="AI"><span>AI</span></div>
+    <div class="circle c2" data-key="CLOUD"><span>CLOUD</span></div>
+    <div class="circle c3" data-key="PROJECTS"><span>PROJECTS</span></div>
+    <div class="circle c4" data-key="RESUME"><span>RESUME</span></div>
+    <div class="circle c5" data-key="LEARNINGS"><span>LEARNINGS</span></div>
+  </div>
 </div>
+
+<!-- TERMINAL MODAL -->
 <div id="modal" class="modal">
-  <div class="modal-content">
-    <div class="close" onclick="closeModal()">✕</div>
-    <div id="content"></div>
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="term-dots">
+        <div class="term-dot dot-red"    onclick="closeModal()"></div>
+        <div class="term-dot dot-yellow"></div>
+        <div class="term-dot dot-green"></div>
+      </div>
+      <div class="term-title" id="term-title">bash — prachi@core</div>
+    </div>
+    <div class="term-body" id="content"></div>
   </div>
 </div>
 
 <div class="about">
-  I build cloud-native backend systems and platforms, 
+  I build cloud-native backend systems and platforms,<br>
   focusing on automation, infrastructure, scalability and reliable applications.
 </div>
 
 <div class="links">
   <a href="https://github.com/prachi-s" target="_blank">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.38.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.64.24 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.6-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.38.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.38-1.34-1.75-1.34-1.75-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.16 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.64.24 2.86.12 3.16.77.84 1.23 1.91 1.23 3.22 0 4.6-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
     GitHub
   </a>
-
   <a href="https://www.linkedin.com/in/prachi-sengar-038325211/" target="_blank">
-    <svg viewBox="0 0 24 24">
-      <path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.12 20.45H3.56V9h3.56v11.45zM5.34 7.43c-1.14 0-2.06-.93-2.06-2.07 0-1.14.92-2.07 2.06-2.07 1.14 0 2.06.93 2.06 2.07 0 1.14-.92 2.07-2.06 2.07zM20.45 20.45h-3.56v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.97v5.69H9.3V9h3.42v1.56h.05c.48-.9 1.66-1.87 3.42-1.87 3.65 0 4.32 2.4 4.32 5.52v6.24z"/>
-    </svg>
+    <svg viewBox="0 0 24 24"><path d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.12 20.45H3.56V9h3.56v11.45zM5.34 7.43c-1.14 0-2.06-.93-2.06-2.07 0-1.14.92-2.07 2.06-2.07 1.14 0 2.06.93 2.06 2.07 0 1.14-.92 2.07-2.06 2.07zM20.45 20.45h-3.56v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.97v5.69H9.3V9h3.42v1.56h.05c.48-.9 1.66-1.87 3.42-1.87 3.65 0 4.32 2.4 4.32 5.52v6.24z"/></svg>
     LinkedIn
   </a>
 </div>
@@ -285,139 +482,218 @@
 <div class="footer">system.out.println("made by prachi");</div>
 
 <script>
-// DATA
+// ── TERMINAL DATA ──
 const data = {
-  AI: `
-    <p>> loading AI systems...</p>
-    <p>> models initialized</p>
+  AI: {
+    title: "bash — ai_systems.sh",
+    html: `
+<p class="t-dim"># initializing AI subsystems...</p>
+<p class="t-cmd">$ ./load_modules.sh --verbose</p>
+<p class="t-dim">▸ models initialized  ▸ pipelines ready  ▸ gpu: detected</p>
 
-    <h3>[ WORK ]</h3>
-    <p>
-    • Developed AI-driven Cloud Optimizer to analyze Kubernetes workloads and recommend cost/performance improvements<br>
-    • Built NLP-based systems and worked on data-driven personalization models<br>
-    • Applied clustering (K-Means) and behavioral profiling for recommendation systems
-    </p>
+<span class="t-head">╔═ WORK ══════════════════════════════════════</span>
+<p class="t-item">▸ AI-driven Cloud Optimizer — analyzes K8s workloads, recommends cost/perf improvements</p>
+<p class="t-item">▸ NLP-based systems + data-driven personalization models</p>
+<p class="t-item">▸ Clustering (K-Means) + behavioral profiling for recommendation engines</p>
 
-    <h3>[ TECH ]</h3>
-    <p>
-    Python • TensorFlow • NLP • Scikit-learn • Vertex AI • Data Pipelines
-    </p>
+<span class="t-head">╔═ STACK ══════════════════════════════════════</span>
+<p class="t-tech">  Python  •  TensorFlow  •  Scikit-learn  •  Vertex AI  •  NLP  •  Data Pipelines</p>
 
-    <h3>[ IMPACT ]</h3>
-    <p>
-    Bridging AI with production systems — moving beyond models to deployable, scalable intelligence.
-    </p>
-  `,
+<span class="t-head">╔═ IMPACT ══════════════════════════════════════</span>
+<p class="t-impact">  Bridging AI with production systems — moving beyond models to deployable, scalable intelligence.</p>
+<p class="cursor t-dim"> </p>`
+  },
 
-  CLOUD: `
-    <p>> initializing cloud infrastructure...</p>
-    <p>> systems online</p>
+  CLOUD: {
+    title: "bash — cloud_infra.sh",
+    html: `
+<p class="t-dim"># connecting to cloud control plane...</p>
+<p class="t-cmd">$ gcloud auth activate && terraform init</p>
+<p class="t-dim">▸ GCP: authenticated  ▸ modules: loaded  ▸ state: synced</p>
 
-    <h3>[ WORK ]</h3>
-    <p>
-    • Built hybrid cloud platform on GKE enabling 200+ teams to provision infra seamlessly<br>
-    • Designed reusable Terraform modules (VPC, IAM, GKE, Cloud SQL) reducing setup time by 90%<br>
-    • Implemented policy-as-code (Sentinel) to enforce compliance and prevent misconfigurations<br>
-    • Enabled Assured Workloads for regulated environments with strict data residency controls
-    </p>
+<span class="t-head">╔═ WORK ══════════════════════════════════════</span>
+<p class="t-item">▸ Hybrid cloud platform on GKE — 200+ teams provisioning infra seamlessly</p>
+<p class="t-item">▸ Reusable Terraform modules (VPC, IAM, GKE, Cloud SQL) — setup time ↓ 90%</p>
+<p class="t-item">▸ Policy-as-code (Sentinel) — compliance enforcement, zero misconfigurations</p>
+<p class="t-item">▸ Assured Workloads for regulated environments with strict data residency</p>
 
-    <h3>[ TECH ]</h3>
-    <p>
-    GCP • AWS • Kubernetes (GKE/EKS) • Terraform • Cloud Run • Docker • CI/CD
-    </p>
+<span class="t-head">╔═ STACK ══════════════════════════════════════</span>
+<p class="t-tech">  GCP  •  AWS  •  Kubernetes (GKE/EKS)  •  Terraform  •  Cloud Run  •  Docker  •  CI/CD</p>
 
-    <h3>[ IMPACT ]</h3>
-    <p>
-    Delivered audit-ready, secure infrastructure at scale.
-    </p>
-  `,
+<span class="t-head">╔═ IMPACT ══════════════════════════════════════</span>
+<p class="t-impact">  Audit-ready, secure infrastructure delivered at enterprise scale.</p>
+<p class="cursor t-dim"> </p>`
+  },
 
-  PROJECTS: `
-    <p>> fetching projects...</p>
-    <p>> 2 high-impact systems loaded</p>
+  PROJECTS: {
+    title: "bash — projects.log",
+    html: `
+<p class="t-dim"># fetching project manifests...</p>
+<p class="t-cmd">$ git log --oneline --all --decorate</p>
+<p class="t-dim">▸ 3 high-impact systems loaded</p>
 
-    <h3>[ AI CLOUD OPTIMIZER ]</h3>
-    <p>
-    AI-powered platform to monitor Kubernetes workloads and recommend cost & performance optimizations.
-    Built using Python + deployed on AWS EKS with Terraform-based infrastructure.
-    </p>
+<span class="t-head">╔═ AI CLOUD OPTIMIZER ══════════════════════════</span>
+<p class="t-item">▸ AI-powered K8s workload monitor with cost & perf recommendations</p>
+<p class="t-tech">  Stack: Python • AWS EKS • Terraform</p>
 
-    <h3>[ DATABASE AUDITOR API ]</h3>
-    <p>
-    Production-grade FastAPI service deployed on Cloud Run with Cloud SQL backend.
-    Enabled secure CRUD operations and session management for auditors with RBAC controls.
-    </p>
+<span class="t-head">╔═ DATABASE AUDITOR API ════════════════════════</span>
+<p class="t-item">▸ Production FastAPI service on Cloud Run + Cloud SQL backend</p>
+<p class="t-item">▸ Secure CRUD + session management with RBAC for auditors</p>
+<p class="t-tech">  Stack: FastAPI • Cloud Run • Cloud SQL • Python</p>
 
-    <h3>[ ENV PROVISIONING SYSTEM ]</h3>
-    <p>
-    Automated provisioning of dev/uat environments across GitHub, Terraform Enterprise, and GCP.
-    Fully containerized with CI/CD pipelines triggering infra deployments.
-    </p>
+<span class="t-head">╔═ ENV PROVISIONING SYSTEM ═════════════════════</span>
+<p class="t-item">▸ Auto-provisioning dev/uat envs across GitHub, TFE, and GCP</p>
+<p class="t-item">▸ Containerized with CI/CD pipelines triggering infra deployments</p>
+<p class="t-tech">  Stack: Docker • GitHub Actions • Terraform Enterprise • GCP</p>
 
-    <h3>[ IMPACT ]</h3>
-    <p>
-    Reduced manual effort, improved developer productivity, and enabled scalable internal platforms.
-    </p>
-  `,
+<span class="t-head">╔═ IMPACT ══════════════════════════════════════</span>
+<p class="t-impact">  Reduced manual effort, improved dev productivity, scaled internal platforms.</p>
+<p class="cursor t-dim"> </p>`
+  },
 
-  RESUME: `
-    <p>> accessing profile...</p>
+  RESUME: {
+    title: "bash — profile.json",
+    html: `
+<p class="t-dim"># accessing personnel record...</p>
+<p class="t-cmd">$ cat profile.json | jq .</p>
 
-    <h3>[ SUMMARY ]</h3>
-    <p>
-    Software Engineer II at Deutsche Bank with experience in building large-scale cloud platforms,
-    backend systems, and automation frameworks for enterprise environments.
-    </p>
+<span class="t-head">╔═ SUMMARY ══════════════════════════════════════</span>
+<p class="t-item">  Software Engineer II @ Deutsche Bank</p>
+<p class="t-item">  Cloud platforms • backend systems • automation for enterprise environments</p>
 
-    <h3>[ HIGHLIGHTS ]</h3>
-    <p>
-    • 2+ years experience in cloud + backend engineering<br>
-    • Built infrastructure used by 200+ teams<br>
-    • Reduced provisioning time by 90% through automation<br>
-    • Experience in secure and compliant systems
-    </p>
+<span class="t-head">╔═ HIGHLIGHTS ═══════════════════════════════════</span>
+<p class="t-item">▸ 2+ years experience in cloud + backend engineering</p>
+<p class="t-item">▸ Infrastructure used by 200+ internal teams</p>
+<p class="t-item">▸ 90% reduction in provisioning time via automation</p>
+<p class="t-item">▸ Secure, compliant systems in regulated environments</p>
 
-    <h3>[ DOWNLOAD ]</h3>
-    <a href="resume.pdf" target="_blank">⬇ Download Resume</a>
-  `,
+<span class="t-head">╔═ DOWNLOAD ══════════════════════════════════════</span>
+<p><a class="t-link" href="resume.pdf" target="_blank">⬇ resume.pdf</a><span class="t-dim">  — last modified: 2025</span></p>
+<p class="cursor t-dim"> </p>`
+  },
 
-  LEARNINGS: `
-    <p>> tracking growth...</p>
+  LEARNINGS: {
+    title: "bash — growth.tracker",
+    html: `
+<p class="t-dim"># syncing learning nodes...</p>
+<p class="t-cmd">$ ./certifications --list && ./roadmap --next</p>
 
-    <h3>[ CERTIFICATIONS ]</h3>
-    <p>
-    • Google Associate Cloud Engineer<br>
-    • Google Generative AI Leader
-    </p>
+<span class="t-head">╔═ CERTIFICATIONS ════════════════════════════════</span>
+<p class="t-item">▸ Google Associate Cloud Engineer</p>
+<p class="t-item">▸ Google Generative AI Leader</p>
 
-    <h3>[ NEXT ]</h3>
-    <p>
-    • Deep dive into AWS architecture<br>
-    • Building AI-native developer tools<br>
-    • Exploring platform engineering at scale
-    </p>
-  `
+<span class="t-head">╔═ NEXT TARGETS ══════════════════════════════════</span>
+<p class="t-item">▸ Deep dive into AWS architecture</p>
+<p class="t-item">▸ Building AI-native developer tools</p>
+<p class="t-item">▸ Exploring platform engineering at scale</p>
+
+<span class="t-head">╔═ STATUS ════════════════════════════════════════</span>
+<p class="t-impact">  Always compiling. Never done.</p>
+<p class="cursor t-dim"> </p>`
+  }
 };
 
-const modal = document.getElementById("modal");
+// ── MODAL ──
+const modal   = document.getElementById("modal");
 const content = document.getElementById("content");
+const termTitle = document.getElementById("term-title");
 
 document.querySelectorAll(".circle").forEach(c => {
   c.addEventListener("click", () => {
-    const key = c.querySelector('span').innerText.trim();
-    content.innerHTML = data[key];
+    const key = c.dataset.key;
+    const d = data[key];
+    termTitle.textContent = d.title;
+    content.innerHTML = d.html;
     modal.classList.add("active");
   });
 });
 
-function closeModal() {
-  modal.classList.remove("active");
-}
+function closeModal() { modal.classList.remove("active"); }
+modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
+// ── FLOATING TECH NODES ──
+const canvas = document.getElementById("tech-canvas");
+const ctx    = canvas.getContext("2d");
+
+const TECHS = [
+  "Python","TensorFlow","Kubernetes","GCP","AWS","Docker",
+  "Terraform","FastAPI","GKE","CI/CD","NLP","Cloud Run",
+  "Sentinel","Vertex AI","Cloud SQL","EKS","IAM","VPC"
+];
+
+function resize() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+const nodes = TECHS.map((label, i) => {
+  const angle = (i / TECHS.length) * Math.PI * 2 + Math.random() * 0.5;
+  const r     = 200 + Math.random() * Math.min(window.innerWidth, window.innerHeight) * 0.28;
+  const cx    = window.innerWidth / 2;
+  const cy    = window.innerHeight / 2;
+  return {
+    label,
+    x: cx + Math.cos(angle) * r,
+    y: cy + Math.sin(angle) * r,
+    vx: (Math.random() - 0.5) * 0.25,
+    vy: (Math.random() - 0.5) * 0.25,
+    opacity: 0.25 + Math.random() * 0.35,
+    size: 10 + Math.random() * 3,
+    pulseOffset: Math.random() * Math.PI * 2
+  };
 });
 
+let frame = 0;
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  frame++;
+
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+
+  nodes.forEach(n => {
+    // drift
+    n.x += n.vx;
+    n.y += n.vy;
+
+    // soft boundary bounce
+    const margin = 80;
+    if (n.x < margin || n.x > canvas.width  - margin) n.vx *= -1;
+    if (n.y < margin || n.y > canvas.height - margin) n.vy *= -1;
+
+    // subtle pull toward own orbit radius
+    const dx  = n.x - cx;
+    const dy  = n.y - cy;
+    const dist = Math.hypot(dx, dy);
+    const target = 320;
+    const pull = (dist - target) * 0.0003;
+    n.vx -= (dx / dist) * pull;
+    n.vy -= (dy / dist) * pull;
+
+    // pulse
+    const pulse = Math.sin(frame * 0.02 + n.pulseOffset) * 0.5 + 0.5;
+    const alpha  = n.opacity * (0.6 + pulse * 0.4);
+
+    // label
+    ctx.font      = `${n.size}px 'Share Tech Mono', monospace`;
+    ctx.fillStyle = `rgba(0, 229, 255, ${alpha})`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(n.label, n.x, n.y);
+
+    // tiny dot accent
+    ctx.beginPath();
+    ctx.arc(n.x - ctx.measureText(n.label).width / 2 - 5, n.y, 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0, 229, 255, ${alpha * 0.8})`;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 </body>
 </html>
