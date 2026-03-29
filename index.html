@@ -168,6 +168,50 @@
       color: var(--muted);
       font-family: 'JetBrains Mono';
     }    
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      width: 420px;
+      max-width: 90%;
+      background: rgba(10,15,25,0.95);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      font-family: 'JetBrains Mono';
+      box-shadow: 0 0 30px rgba(0,229,255,0.2);
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close {
+      cursor: pointer;
+      color: var(--muted);
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: var(--accent);
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -196,6 +240,12 @@
   <div class="circle c5">LEARNINGS</div>
 
 </div>
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal()">✕</div>
+    <div id="content"></div>
+  </div>
+</div>
 
 <div class="about">
   I build cloud-native backend systems and platforms, 
@@ -220,5 +270,72 @@
 
 <div class="footer">system.out.println("made by prachi");</div>
 
+<script>
+// DATA
+const data = {
+  AI: `
+    <p>> loading AI module...</p>
+    <p>> ready</p>
+    <h3>[ OVERVIEW ]</h3>
+    <p>Worked on GenAI, NLP pipelines and intelligent automation systems.</p>
+    <h3>[ TECH ]</h3>
+    <p>Vertex AI, Python, TensorFlow</p>
+    <h3>[ IMPACT ]</h3>
+    <p>Reduced manual effort and improved developer productivity.</p>
+  `,
+  CLOUD: `
+    <p>> initializing cloud systems...</p>
+    <p>> connected</p>
+    <h3>[ OVERVIEW ]</h3>
+    <p>Built scalable infrastructure using GCP and Terraform.</p>
+    <h3>[ TECH ]</h3>
+    <p>GCP, Terraform, Cloud Run</p>
+    <h3>[ IMPACT ]</h3>
+    <p>Enabled automated deployments and cost optimization.</p>
+  `,
+  PROJECTS: `
+    <p>> fetching projects...</p>
+    <p>> loaded</p>
+    <h3>[ OVERVIEW ]</h3>
+    <p>Automation tools, ML pipelines and developer productivity tools.</p>
+    <h3>[ TECH ]</h3>
+    <p>Python, NLP, APIs</p>
+    <h3>[ IMPACT ]</h3>
+    <p>Improved workflow efficiency and reduced manual work.</p>
+  `,
+  RESUME: `
+    <p>> opening resume...</p>
+    <h3>[ DOWNLOAD ]</h3>
+    <a href="resume.pdf" target="_blank">⬇ Download Resume</a>
+  `,
+  LEARN: `
+    <p>> tracking learning...</p>
+    <h3>[ CURRENT ]</h3>
+    <p>Kubernetes, System Design, Distributed Systems</p>
+    <h3>[ NEXT ]</h3>
+    <p>Advanced AI systems and backend scaling</p>
+  `
+};
+
+const modal = document.getElementById("modal");
+const content = document.getElementById("content");
+
+document.querySelectorAll(".circle").forEach(c => {
+  c.addEventListener("click", () => {
+    content.innerHTML = data[c.innerText];
+    modal.classList.add("active");
+  });
+});
+
+function closeModal() {
+  modal.classList.remove("active");
+}
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
+});
+
+
+</script>
 </body>
 </html>
