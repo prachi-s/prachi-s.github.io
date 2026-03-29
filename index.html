@@ -381,7 +381,7 @@ const data = {
     <a href="resume.pdf" target="_blank">⬇ Download Resume</a>
   `,
 
-  LEARN: `
+  LEARNINGS: `
     <p>> tracking growth...</p>
 
     <h3>[ CERTIFICATIONS ]</h3>
@@ -404,7 +404,8 @@ const content = document.getElementById("content");
 
 document.querySelectorAll(".circle").forEach(c => {
   c.addEventListener("click", () => {
-    content.innerHTML = data[c.innerText];
+    const key = c.querySelector('span').innerText.trim();
+    content.innerHTML = data[key];
     modal.classList.add("active");
   });
 });
